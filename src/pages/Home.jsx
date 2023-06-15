@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../components/Header'
 import camaron1 from '../assets/shrimp1.png'
 import camaron2 from '../assets/shrimp2.png'
+import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
@@ -33,6 +34,12 @@ const Home = () => {
                 </div>
 
                 <img className='rounded-3xl w-2/5 min-h-[250px] object-cover sm:w-[45%] md:h-auto' src={camaron2} alt="festival people" />
+            </section>
+
+            {/* Registro */}
+            <section className='flex flex-col items-center w-full py-24 bg-primary '>
+                <p className='text-center text-black  text-xs sm:text-xl sm:px-5'>¿Aun no tienes cuenta? <br/>¡Eso es un problema, pero nosotros te ayudamos!</p>
+                <Link to = '/register' className='bg-secondary hover:bg-secondaryHover text-white w-4/5 sm:w-2/5 p-3 text-xs sm:text-xl my-5 rounded-full text-center '> Regístrate </Link>
             </section>
 
         </>
