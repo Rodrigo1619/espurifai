@@ -8,7 +8,7 @@ const Login = () => {
     const navigate = useNavigate(); //llamando al hook para poder hacer redireccionamiento
     const UserLoginClick =()=>{
         console.log("hiciste click");
-        navigate('/');
+        navigate('/mainpage');
     }
     return (
         <>
