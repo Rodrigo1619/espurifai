@@ -4,7 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/login';
 import Home from './pages/Home';
 import Register from './pages/Register';
-import MainPage from './pages/MainPage'
+import MainPage from './pages/MainPage';
+import Song from './pages/Song'
+import Playlist from './pages/Playlist';
+import Users from './pages/Users';
 
 function App() {
 
@@ -16,6 +19,9 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
           <Route path='/mainpage' element={<MainPage/>}/>
+          <Route path='/song' element={<Song/>}/>
+          <Route path='/playlist' element={<Playlist/>}/>
+          <Route path='/user' element={<Users/>}/>
         </Routes>
       </Router>
     </>
