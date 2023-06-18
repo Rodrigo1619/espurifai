@@ -13,21 +13,21 @@ const MainPage = () => {
             <Header2/>
         </section>
 
-        <section className='grid grid-cols-3 mt-20'>
+        <section className='grid grid-cols-2 mt-20 md:grid md:grid-cols-3'>
             <Link to='/song'>
-                <div className='flex flex-col items-center justify-center'>
+                <div className='flex flex-col items-center justify-center py-10'>
                     <BsMusicNoteBeamed className='h-24 w-24'/>
                     <span className='text-4xl text-center'> Song</span>
                 </div>
             </Link>
             <Link to='/playlist'>
-                <div className='flex flex-col items-center justify-center'>
+                <div className='flex flex-col items-center justify-center py-10'>
                     <TbPlaylist className='h-24 w-24'/>
                     <span className='text-4xl text-center'> Playlist</span>
                 </div>
             </Link>
             <Link to='/user'>
-                <div className='flex flex-col items-center justify-center'>
+                <div className='flex flex-col items-center justify-center py-10'>
                     <RiUserSmileLine className='h-24 w-24'/>
                     <span className='text-4xl text-center'> Users</span>
                 </div>

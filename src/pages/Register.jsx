@@ -1,8 +1,72 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import logo1 from '../assets/icon1.png'
 
 const Register = () => {
+    //agregamos el estado para poder ir registrando lo que el usuario nos mande
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const BaseURL = 'http://localhost:8080'
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
+    
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+    
+
+
+    const handleRegister = async () => {
+        console.log('username:', username);
+        console.log('email:', email);
+        console.log('password:', password);
+        // Verificar las validaciones de la contraseña
+        const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=]).{8,}$/;
+
+        if (!passwordRegex.test(password)) {
+            toast.error('La contraseña no cumple con los requisitos.');
+            toast.error('La contraseña debe tener al menos una letra minuscula, mayuscula y un caracter especial (@#$%^&+=)');
+            return;
+        }
+        try {
+            const response = await axios.post(`${BaseURL}/auth/signup`, {
+                username,
+                email,
+                password,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+            }
+            });
+            toast.success('Usuario registrado correctamente!');
+        } catch (error) {
+
+            if (error.response) {
+                const statusCode = error.response.status;
+                if (statusCode === 409) {
+                    toast.error('El usuario ya existe. Por favor, elige otro nombre de usuario u otro correo.');
+                } else if (statusCode === 400) {
+                    toast.error('Error al registrar. Por favor, asegúrate de llenar todos los campos correctamente.');
+                } else {
+                    toast.error('Error al registrar. Por favor, intenta nuevamente.');
+                }
+                } else {
+                    toast.error('Error al conectar con el servidor. Por favor, intenta nuevamente más tarde.');
+                }
+            }
+        }
+
     return (
         <>
         <div className="flex flex-col items-center">
@@ -10,7 +74,7 @@ const Register = () => {
                 <form className=" px-8 pt-6 pb-8 mb-4  font-sans ">
                 <Link to='/'>
                     <div className='flex justify-center mb-4'>
-                        <img class='w-1/2 h-1/2 shadow-md rounded md:w-2/6 ' src={logo1}/>
+                        <img className='w-1/2 h-1/2 shadow-md rounded md:w-2/6 ' src={logo1}/>
                     </div>
                 </Link>
         <div className="mb-4">
@@ -28,6 +92,8 @@ const Register = () => {
                 id="username"
                 type="text"
                 placeholder="Nombre de usuario"
+                value={username}
+                onChange={handleUsernameChange}
             />
         </div>
 
@@ -40,6 +106,8 @@ const Register = () => {
                 id="email"
                 type="email"
                 placeholder="Correo electrónico"
+                value={email}
+                onChange={handleEmailChange}
             />
         </div>
 
@@ -52,16 +120,20 @@ const Register = () => {
                 id="password"
                 type="password"
                 placeholder="**********"
+                value={password}
+                onChange={handlePasswordChange}
             />
         </div>
         <div className="flex justify-center mb-4 md:mb-2">
           <button
             className="bg-primary text-white border border-black-600 rounded-md px-4 py-2 md:text-2xl"
             type="button"
+            onClick={handleRegister}
             >
             Registrarse
           </button>
         </div>
+        <ToastContainer/>
       </form>
     </div>
     <div className='md:flex md:flex-row md:space-x-4'>
