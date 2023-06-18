@@ -15,7 +15,7 @@ const Home = () => {
             
             <section className=' py-14'>
                 <div className='flex justify-evenly w-full'>
-                    <img className='rounded-3xl w-2/5 sm:w-1/2 min-h-[250px] sm:min-h-[350px] object-cover md:h-auto' src={camaron1} alt="friendsgroup"/>
+                    <img className='rounded-3xl w-2/5 sm:w-1/2 min-h-[250px] sm:min-h-[350px] object-cover md:h-[450px]' src={camaron1} alt="friendsgroup"/>
 
                     <div className='w-1/2 flex flex-col justify-center sm:w-2/5'>
                         <h2 className='text-center text-white text-sm mb-5 sm:text-xl lg:text-3xl xl:text-[2.5rem] xl:leading-[2.825rem]'>
@@ -33,7 +33,7 @@ const Home = () => {
                     <p className='text-gray-300 text-xs px-3 sm:text-base sm:px-5 lg:text-2xl xl:text-4xl lg:px-11'>Puedes crear las playlist de todos modos y agregar las canciones de tu género preferido</p>
                 </div>
 
-                <img className='rounded-3xl w-2/5 min-h-[250px] object-cover sm:w-[45%] md:h-auto' src={camaron2} alt="festival people" />
+                <img className='rounded-3xl w-2/5 min-h-[250px] object-cover sm:w-[45%] md:h-[450px]' src={camaron2} alt="festival people" />
             </section>
 
             {/* Registro */}
