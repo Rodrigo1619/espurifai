@@ -14,7 +14,7 @@ const Header = () => {
                     <div className='flex flex-row items-center justify-end'>
                         <Link to="/login" className='bg-secondary rounded-2xl py-4 px-6 hover:bg-green-400'><span className='text-white'>Inicia sesión</span> </Link>
                         <img src={userIcon} alt="user icon" className='hidden md:flex pl-4 ' />
-                </div>
+                    </div>
                 </div>
             </nav>
     )
