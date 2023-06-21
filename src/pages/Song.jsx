@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios';
 import Header2 from '../components/Header2'
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const Song = () => {
   const [songs, setSongs] = useState([]);
   const BaseUrl = 'http://localhost:8080';
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -26,11 +30,14 @@ const Song = () => {
         if (response.data && response.data.content) {
           setSongs(response.data.content);
           setTotalPages(response.data.total_pages);
-        } else {
+        }
+        else {
           console.error('La respuesta no contiene canciones válidas:', response.data);
         }
       } catch (error) {
         console.error('Error en la solicitud:', error);
+        toast('Que haces aqui, si no hay token?', { type: 'error' });
+        toast('Sera mejor que le loguees', { type: 'warning' });
       }
     };
 
@@ -72,6 +79,7 @@ const Song = () => {
           ))}
         </div>
       </section>
+      <ToastContainer/>
     </>
   )
 }

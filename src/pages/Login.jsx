@@ -90,7 +90,6 @@ const Login = () => {
                       <button
                         className="bg-primary border border-black-600 rounded-md px-4 py-2 md:text-2xl text-white"
                         type="submit"
-                        
                       >
                         Inicie Sesión 
                       </button>
