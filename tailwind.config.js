@@ -12,7 +12,8 @@ export default {
         otherbalck: '#2B2730',
         othergreem: '#5C8984',
         logout: '#B70404',
-        logout2: '#EB455F'
+        logout2: '#EB455F',
+        songcolor: '#DAFFFB'
       }
     },
   },
