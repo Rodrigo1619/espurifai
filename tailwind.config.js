@@ -13,7 +13,8 @@ export default {
         othergreem: '#5C8984',
         logout: '#B70404',
         logout2: '#EB455F',
-        songcolor: '#DAFFFB'
+        songcolor: '#DAFFFB',
+        
       }
     },
   },

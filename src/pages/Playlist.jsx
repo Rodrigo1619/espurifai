@@ -96,10 +96,27 @@ const onSubmitAddSongtoPlaylist = async(e)=>{
       toast('No tienes autorización para agregar una cancion a esta playlist', { type: 'error' });
     } else if (response.status === 404) {
       toast('Playlist no encontrada', { type: 'error' });
+    } else if (response.status === 400) {
+      toast('LLena bien los campos', { type: 'error' });
     }else if(response.status === 409){
       toast('Esa canción ya existe en la playlist mi rey', {type: 'warning'});
     }
   }
+}
+//eso es para poder mostrar las canciones de la playlist con sus atributos
+//se inicia en null porque sino da un error medio raro
+let playlistSongs = null;
+if (playlist && playlist.songs) {
+  playlistSongs = playlist.songs.map(song => (
+    <div key={song.code} className=' bg-white text-black'>
+      <p className='text-gray-200 font-bold bg-primary '>Titulo:</p>
+      <p className='text-black'>{song.title}</p>
+      <p className='text-black font-bold '>Duración:</p>
+      <p >{song.duration}</p>
+      <p className=' font-bold '>Fecha agregada:</p>
+      <p>{song.dateAdded}</p>
+    </div>
+  ));
 }
 
 
@@ -198,7 +215,7 @@ const onSubmitAddSongtoPlaylist = async(e)=>{
 
       {/* Mostrar la informacion de la playlist */}
     
-  {playlist && (
+      {playlist && (
     <section className='mt-5 bg-otherbalck'>
       <h2 className='text-white font-bold text-center mb-4 md:text-3xl'>Información de la Playlist</h2>
       <div className='grid grid-cols-2 text-center'>
@@ -208,7 +225,8 @@ const onSubmitAddSongtoPlaylist = async(e)=>{
         <p className='text-gray-200 md:text-2xl'>{playlist.description}</p>
         <p className='text-gray-200 font-bold md:text-2xl'>Duración total:</p>
         <p className='text-gray-200 md:text-2xl'>{playlist.totalDuration}</p>
-
+        <p className='text-gray-200 font-bold md:text-2xl'>Canciones:</p>
+        {playlistSongs} {/* Renderizar las canciones */}
       </div>
     </section>
   )}
