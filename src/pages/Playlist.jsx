@@ -71,13 +71,44 @@ const onSubmitGetPlaylist = async (e) => {
   }
 };
 
+//para agregar cancion a playlist
+const onSubmitAddSongtoPlaylist = async(e)=>{
+  e.preventDefault();
+  const formData = new FormData(e.target);     // Guardando la informacion del formulario con formData
+  const formBody = Object.fromEntries(formData.entries());
+
+  //validacion para que no se mande nada vacio
+  if(formBody.songCode === '') return toast('Llena todos los datos pa agregar la canción a la playlist', { type: 'warning' });
+  //obteniendo el codigo
+  const playlistCode = e.target.elements.code.value;
+  try{
+    const response = await axios.post(`${BaseUrl}/playlist/${playlistCode}`,formBody ,config);
+
+    if (response.status === 200) {
+      setPlaylist(response.data);
+      console.log(response.data);
+      toast('Cancion agregada correctamente a la playlist', {type: 'success'});
+    }
+
+  }catch(error){
+    const { response } = error;
+    if (response.status === 401) {
+      toast('No tienes autorización para agregar una cancion a esta playlist', { type: 'error' });
+    } else if (response.status === 404) {
+      toast('Playlist no encontrada', { type: 'error' });
+    }else if(response.status === 409){
+      toast('Esa canción ya existe en la playlist mi rey', {type: 'warning'});
+    }
+  }
+}
+
 
   return (
     <>
       <section> <Header2/> </section>
 
       {/* Seccion del formulario para crear playlist */}
-      <section className='grid grid-cols-2'>
+      <section className='grid grid-cols-2 md:grid md:grid-cols-3'>
         <div className='bg-otherbalck mt-5 mx-5'>
           <form className='px-8 pt-6 pb-8 mb-4' onSubmit={onSubmitHandler}>
             <label className='text-center block text-white font-bold mb-4 md:text-3xl' htmlFor="title">Crear una playlist</label>
@@ -109,7 +140,7 @@ const onSubmitGetPlaylist = async (e) => {
           </div>
           </form>
         </div>
-
+        {/* Formulario para obtener una playlist */}
         <div className='bg-otherbalck mt-5 mx-5'>
           <form className='px-8 pt-6 pb-8 mb-4' onSubmit={onSubmitGetPlaylist}>
             <label className='text-center block text-white font-bold mb-4 md:text-3xl' htmlFor="code">Obtener una playlist</label>
@@ -132,6 +163,37 @@ const onSubmitGetPlaylist = async (e) => {
           </form>
 
         </div>
+
+        {/* Formulario para agregar una cancion */}
+        <div className='bg-otherbalck mt-5 mx-5'>
+          <form className='px-8 pt-6 pb-8 mb-4' onSubmit={onSubmitAddSongtoPlaylist}>
+            <label className='text-center block text-white font-bold mb-4 md:text-3xl' htmlFor="">Añadir una canción a una playlist</label>
+            <label className='text-center block text-white font-bold mb-4 md:text-2xl' htmlFor="">Ingresa el codigo de la playlist</label>
+            <input
+              className=" placeholder:text-center shadow appearance-none border rounded w-full md:h-full md: py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="code"
+              name="code"
+              type="text"
+              placeholder="Código de la playlist"
+            />
+            <label className='text-center block text-white font-bold mb-4 md:text-2xl' htmlFor="">Ingresa el codigo de la canción a agregar</label>
+            <input
+              className=" placeholder:text-center shadow appearance-none border rounded w-full md:h-full md: py-2 px-3 mb-5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="songCodeode"
+              name="songCode"
+              type="text"
+              placeholder="Código de la canción"
+            />
+            <div className="flex justify-center mt-5">
+                <button
+                  className="bg-primary border border-black-600 rounded-md px-4 py-2 md:text-2xl text-white"
+                  type="submit"
+                >
+                  Agregar canción
+                </button>
+            </div>
+          </form>
+        </div>
       </section>
 
       {/* Mostrar la informacion de la playlist */}
@@ -146,6 +208,7 @@ const onSubmitGetPlaylist = async (e) => {
         <p className='text-gray-200 md:text-2xl'>{playlist.description}</p>
         <p className='text-gray-200 font-bold md:text-2xl'>Duración total:</p>
         <p className='text-gray-200 md:text-2xl'>{playlist.totalDuration}</p>
+
       </div>
     </section>
   )}
